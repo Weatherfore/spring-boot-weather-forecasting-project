@@ -20,20 +20,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import logging.GlobalResources;
 import spring.boot.weather.forecasting.exception.WeatherAppException;
 import spring.boot.weather.forecasting.model.*;
 
 @Component
 public class HttpRestClient {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private final Logger Logger = GlobalResources.getLogger(this.getClass());
 	
 	public JSONArray getAPIData(String cityName) {
-		this.LOGGER.info("HttpRestClient: getAPIData() with cityName "+cityName);
+		this.Logger.info("HttpRestClient: getAPIData() with cityName "+cityName);
 		JSONArray jsonObject = new JSONArray();
 		HttpURLConnection connection = null;
 		try {
 			URL url = new URL(getURL(cityName));
-			this.LOGGER.info("URL HOST to be executed: "+url.getHost());
+			this.Logger.info("URL HOST to be executed: "+url.getHost());
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod(Constants.GET_METHOD);
 			connection.setRequestProperty(Constants.ACCEPT_STR, Constants.APPLICATION_JSON);
@@ -48,11 +49,11 @@ public class HttpRestClient {
 			}
 
 		} catch (Exception e) {
-			this.LOGGER.error("HttpRestClient: getAPIData() Error  "+e.getMessage());
+			this.Logger.error("HttpRestClient: getAPIData() Error  "+e.getMessage());
 			throw new WeatherAppException(e.getMessage());
 
 		} finally {
-			this.LOGGER.info("HttpRestClient: getAPIData() closing connection  ");
+			this.Logger.info("HttpRestClient: getAPIData() closing connection  ");
 			connection.disconnect();
 		}
 		return jsonObject;
@@ -90,7 +91,7 @@ public class HttpRestClient {
 			List<Weather> list = map.get(key);
 			list.sort(Comparator.comparing(Weather::getMaxTemp));
 			float maxTemp = convertKelvinToCelsius(list.get(list.size() - 1).getMaxTemp());
-			String rain = (list.get(list.size() - 1).getMessage()).equals("Rain") ? "Carry umbrella" : "";
+			String rain = (list.get(list.size() - 1).getMessage()).equals("Rain") ? "Carry umbrella" : "weather is fine";
 			float minTemp = convertKelvinToCelsius(list.get(0).getMinTemp());
 			rain = (list.get(0).getMessage()).equals("Rain") ? "Carry umbrella" : "";
 			City finalResponse = new City();
@@ -98,7 +99,7 @@ public class HttpRestClient {
 			finalResponse.setMinTemp(minTemp);
 			finalResponse.setDate(key);
 			if (rain.isEmpty())
-				finalResponse.setMessage(maxTemp > 40 ? " Use sunscreen lotion" : "");
+				finalResponse.setMessage(maxTemp > 40 ? " Use sunscreen lotion" : "weather is fine");
 			else if(!rain.isEmpty())finalResponse.setMessage(rain);
 
 			responseMap.put((key), finalResponse);

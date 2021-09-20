@@ -62,6 +62,7 @@ public class RegistrationService {
 		throw new IncorrectLoginCredentialsException("Invalid Credentials");
 	}
 
+	
 	// GetUserById
 	public Registration getUser(long rid) throws NoSuchRegistrationException {
 		Registration user = null;
@@ -74,7 +75,7 @@ public class RegistrationService {
 	}
 
 	// DeleteUserById
-	public String deleteUser(long rid) throws NoSuchRegistrationException{
+	public String deleteUser(long rid) throws NoSuchRegistrationException {
 		if (registrationRepository.existsById(rid)) {
 			registrationRepository.deleteById(rid);
 			return "Registration successfully deleted";
@@ -83,7 +84,7 @@ public class RegistrationService {
 		throw new NoSuchRegistrationException("No Such User Id is present");
 	}
 
-	public Registration updatingUser(Registration user) throws NoSuchRegistrationException{
+	public Registration updatingUser(Registration user) throws NoSuchRegistrationException {
 		if (registrationRepository.existsById(user.getRid()))
 			return registrationRepository.save(user);
 		else {
@@ -92,4 +93,26 @@ public class RegistrationService {
 		}
 
 	}
+
+	public boolean loginUser3(long rid, String password, String name, String reEnterPassword) throws IncorrectLoginCredentialsException{
+		if (registrationRepository.existsById(rid)
+				&& registrationRepository.findById(rid).get().getPassword().equals(password)
+				&& registrationRepository.findById(rid).get().getName().equals(name)
+				&& registrationRepository.findById(rid).get().getReEnterPassword().equals(reEnterPassword)) {
+
+			Logger.info("User login is Successfull");
+			return true;
+		}
+		Logger.error("details are incorrect");
+		throw new IncorrectLoginCredentialsException("Invalid Credentials");
+
+		
+	}
+
+	public boolean loginUser2(long rid, String password, String name, String reEnterPassword) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 }
