@@ -49,19 +49,7 @@ public class RegistrationService {
 		throw new InvalidFieldException("Fields are empty");
 	}
 
-	// login
-	public Registration loginUser(long rid, String password) throws IncorrectLoginCredentialsException {
-		Registration userReturn = null;
-		if (registrationRepository.existsById(rid)
-				&& registrationRepository.findById(rid).get().getPassword().equals(password)) {
-			userReturn = registrationRepository.findById(rid).get();
-			Logger.info("User login is Successfull");
-			return userReturn;
-		}
-		Logger.error("details are incorrect");
-		throw new IncorrectLoginCredentialsException("Invalid Credentials");
-	}
-
+	
 	
 	// GetUserById
 	public Registration getUser(long rid) throws NoSuchRegistrationException {
@@ -94,25 +82,19 @@ public class RegistrationService {
 
 	}
 
-	public boolean loginUser3(long rid, String password, String name, String reEnterPassword) throws IncorrectLoginCredentialsException{
+	
+	/**
+	public Registration loginUser(long rid, String password) throws IncorrectLoginCredentialsException {
+		Registration userReturn = null;
 		if (registrationRepository.existsById(rid)
-				&& registrationRepository.findById(rid).get().getPassword().equals(password)
-				&& registrationRepository.findById(rid).get().getName().equals(name)
-				&& registrationRepository.findById(rid).get().getReEnterPassword().equals(reEnterPassword)) {
-
+				&& registrationRepository.findById(rid).get().getPassword().equals(password)) {
+			userReturn = registrationRepository.findById(rid).get();
 			Logger.info("User login is Successfull");
-			return true;
+			return userReturn;
 		}
 		Logger.error("details are incorrect");
 		throw new IncorrectLoginCredentialsException("Invalid Credentials");
-
-		
 	}
-
-	public boolean loginUser2(long rid, String password, String name, String reEnterPassword) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+    */
 	
 }

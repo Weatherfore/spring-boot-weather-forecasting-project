@@ -43,14 +43,6 @@ public class RegistrationController {
 		return response;
 	}
 
-	// localhost:8086/weather/user/login
-	@PostMapping(value = "/user/login")
-	public ResponseEntity<Registration> userLogin(@RequestBody Registration user)
-			throws IncorrectLoginCredentialsException {
-		Registration result = registrationService.loginUser(user.getRid(), user.getPassword());
-		ResponseEntity<Registration> response = new ResponseEntity<>(result, HttpStatus.OK);
-		return response;
-	}
 
 	//localhost:8086/weather/getUserById/26
 	@GetMapping(value = "/getUserById/{rid}")
