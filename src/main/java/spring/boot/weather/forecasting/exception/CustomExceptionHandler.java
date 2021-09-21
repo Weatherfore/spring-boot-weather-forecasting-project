@@ -14,6 +14,15 @@ public class CustomExceptionHandler {
 
 	private Logger Logger = GlobalResources.getLogger(CustomExceptionHandler.class);
 	
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<Object> handleAdminNotFoundException() {
+		Logger.error("handleAdminNotFoundException");
+
+		return new ResponseEntity<Object>("Admin Id is Not Present", HttpStatus.NOT_FOUND);
+
+	}
+
+	
 	@ExceptionHandler(IncorrectLoginCredentialsException.class)
 	public ResponseEntity<Object> handleIncorrectLoginCredentialsException() {
 		Logger.error("handleIncorrectLoginCredentialsException");
@@ -37,5 +46,14 @@ public class CustomExceptionHandler {
 
 	}
 
+	@ExceptionHandler(WeatherAppException.class)
+	public ResponseEntity<Object> handleWeatherAppException() {
+		Logger.error("handleWeatherAppException");
+
+		return new ResponseEntity<Object>("Invalid City", HttpStatus.NOT_FOUND);
+
+	}
+
+	
 	
 }

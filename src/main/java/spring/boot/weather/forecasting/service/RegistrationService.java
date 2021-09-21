@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import logging.GlobalResources;
-import spring.boot.weather.forecasting.exception.IncorrectLoginCredentialsException;
 import spring.boot.weather.forecasting.exception.InvalidFieldException;
 import spring.boot.weather.forecasting.exception.NoSuchRegistrationException;
 import spring.boot.weather.forecasting.model.Registration;
@@ -40,17 +39,18 @@ public class RegistrationService {
 				}
 
 				if (!newUser.getPassword().equals(newUser.getReEnterPassword())) {
-					throw new InvalidFieldException("Password is not matching");
+				   throw new InvalidFieldException("Password is not matching");
+                 
 				}
 			}
 			Logger.error("Incorrect details");
 			throw new InvalidFieldException("Not able to add user");
+
 		}
 		throw new InvalidFieldException("Fields are empty");
+
 	}
 
-	
-	
 	// GetUserById
 	public Registration getUser(long rid) throws NoSuchRegistrationException {
 		Registration user = null;
@@ -82,19 +82,5 @@ public class RegistrationService {
 
 	}
 
-	
-	/**
-	public Registration loginUser(long rid, String password) throws IncorrectLoginCredentialsException {
-		Registration userReturn = null;
-		if (registrationRepository.existsById(rid)
-				&& registrationRepository.findById(rid).get().getPassword().equals(password)) {
-			userReturn = registrationRepository.findById(rid).get();
-			Logger.info("User login is Successfull");
-			return userReturn;
-		}
-		Logger.error("details are incorrect");
-		throw new IncorrectLoginCredentialsException("Invalid Credentials");
-	}
-    */
 	
 }

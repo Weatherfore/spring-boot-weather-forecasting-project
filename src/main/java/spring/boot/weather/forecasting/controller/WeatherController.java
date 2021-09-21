@@ -5,20 +5,15 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import logging.GlobalResources;
-import spring.boot.weather.forecasting.exception.IncorrectLoginCredentialsException;
 import spring.boot.weather.forecasting.exception.WeatherAppException;
 import spring.boot.weather.forecasting.model.Registration;
-import spring.boot.weather.forecasting.service.RegistrationService;
 import spring.boot.weather.forecasting.service.WeatherService;
 
 @RestController
@@ -29,10 +24,8 @@ public class WeatherController {
 
 	@Autowired
 	private WeatherService service;
-	@Autowired
-	private RegistrationService registrationService;
+	
 
-//	
 	@PatchMapping(value = "/getForcast", produces = "application/json")
 	public ResponseEntity<Object> getForcast(@RequestBody Registration user,
 			@RequestParam(value = "cityName") String cityName) {

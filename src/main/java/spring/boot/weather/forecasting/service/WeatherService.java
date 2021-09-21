@@ -44,6 +44,7 @@ public class WeatherService {
 		}
 		Logger.error("details are incorrect");
 		throw new IncorrectLoginCredentialsException("Invalid Credentials");	
+		
 	}
 
 }
