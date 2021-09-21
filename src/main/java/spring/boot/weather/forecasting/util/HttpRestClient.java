@@ -24,14 +24,14 @@ import spring.boot.weather.forecasting.model.*;
 @Component
 public class HttpRestClient {
 	private final Logger Logger = GlobalResources.getLogger(this.getClass());
-	
+
 	public JSONArray getAPIData(String cityName) {
-		this.Logger.info("HttpRestClient: getAPIData() with cityName "+cityName);
+		this.Logger.info("HttpRestClient: getAPIData() with cityName " + cityName);
 		JSONArray jsonObject = new JSONArray();
 		HttpURLConnection connection = null;
 		try {
 			URL url = new URL(getURL(cityName));
-			this.Logger.info("URL HOST to be executed: "+url.getHost());
+			this.Logger.info("URL HOST to be executed: " + url.getHost());
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod(Constants.GET_METHOD);
 			connection.setRequestProperty(Constants.ACCEPT_STR, Constants.APPLICATION_JSON);
@@ -46,7 +46,7 @@ public class HttpRestClient {
 			}
 
 		} catch (Exception e) {
-			this.Logger.error("HttpRestClient: getAPIData() Error  "+e.getMessage());
+			this.Logger.error("HttpRestClient: getAPIData() Error  " + e.getMessage());
 			throw new WeatherAppException(e.getMessage());
 
 		} finally {
@@ -88,7 +88,8 @@ public class HttpRestClient {
 			List<Weather> list = map.get(key);
 			list.sort(Comparator.comparing(Weather::getMaxTemp));
 			float maxTemp = convertKelvinToCelsius(list.get(list.size() - 1).getMaxTemp());
-			String rain = (list.get(list.size() - 1).getMessage()).equals("Rain") ? "Carry umbrella" : "weather is fine";
+			String rain = (list.get(list.size() - 1).getMessage()).equals("Rain") ? "Carry umbrella"
+					: "weather is fine";
 			float minTemp = convertKelvinToCelsius(list.get(0).getMinTemp());
 			rain = (list.get(0).getMessage()).equals("Rain") ? "Carry umbrella" : "";
 			City finalResponse = new City();
@@ -97,7 +98,8 @@ public class HttpRestClient {
 			finalResponse.setDate(key);
 			if (rain.isEmpty())
 				finalResponse.setMessage(maxTemp > 40 ? " Use sunscreen lotion" : "weather is fine");
-			else if(!rain.isEmpty())finalResponse.setMessage(rain);
+			else if (!rain.isEmpty())
+				finalResponse.setMessage(rain);
 
 			responseMap.put((key), finalResponse);
 
@@ -110,9 +112,9 @@ public class HttpRestClient {
 		int currentDate = localDate.getDayOfMonth();
 		for (String key : keys) {
 			int datePart = Integer.parseInt(key.split("-")[2]);
-			
-			if(currentDate<datePart && datePart<=currentDate+3)
-			responseArray.put(obj.getJSONObject(key));
+
+			if (currentDate < datePart && datePart <= currentDate + 3)
+				responseArray.put(obj.getJSONObject(key));
 		}
 
 		return responseArray;
@@ -122,8 +124,6 @@ public class HttpRestClient {
 	private float convertKelvinToCelsius(float kelvin) {
 		return (float) (kelvin - 273.15);
 	}
-
-	
 
 	private String getURL(String cityName) {
 		return Constants.HOST + "/" + Constants.VERSION + "/forecast?q=" + cityName + "&appid=" + Constants.API_KEY;

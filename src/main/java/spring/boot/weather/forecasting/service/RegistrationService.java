@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 
-@Service // ("registrationService")
+@Service 
 public class RegistrationService {
 
 	private Logger Logger = GlobalResources.getLogger(RegistrationService.class);
@@ -21,13 +21,14 @@ public class RegistrationService {
 	@Autowired
 	RegistrationRepository registrationRepository;
 
-	// registration
+	
+	//User Registration
 	@Transactional
 	public boolean addUser(Registration newUser) throws InvalidFieldException {
-		if (newUser.getName() != null && newUser.getRid() != 0L && newUser.getPassword() != null
+		if (newUser.getUserName() != null && newUser.getRid() != 0L && newUser.getPassword() != null
 				&& newUser.getReEnterPassword() != null) {
 			boolean result = false;
-			String name = newUser.getName();
+			String name = newUser.getUserName();
 
 			String regex = "^[A-Za-z ]+";
 			if (name.matches(regex)) {

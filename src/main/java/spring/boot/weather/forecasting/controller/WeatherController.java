@@ -25,7 +25,7 @@ public class WeatherController {
 	@Autowired
 	private WeatherService service;
 	
-
+	// http://localhost:8086/weather/getForcast?cityName=Delhi
 	@PatchMapping(value = "/getForcast", produces = "application/json")
 	public ResponseEntity<Object> getForcast(@RequestBody Registration user,
 			@RequestParam(value = "cityName") String cityName) {
@@ -34,7 +34,7 @@ public class WeatherController {
 		JSONArray result = null;
 
 		try {
-			boolean resultLogin = service.loginUser(user.getRid(), user.getPassword(), user.getName(),
+			boolean resultLogin = service.loginUser(user.getRid(), user.getPassword(), user.getUserName(),
 					user.getReEnterPassword());
 			if (resultLogin) {
 				result = this.service.getForcast(cityName);

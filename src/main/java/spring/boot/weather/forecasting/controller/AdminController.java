@@ -35,6 +35,8 @@ public class AdminController {
 	@Autowired
 	private RegistrationService registrationService;
 
+	// Admin registration
+	// localhost:8086/weather/addAdmin
 	@PostMapping("/addAdmin")
 	public ResponseEntity<Administration> addAdministration(@RequestBody Administration administration) {
 		Logger.info("getAdministration");
@@ -42,6 +44,8 @@ public class AdminController {
 		return new ResponseEntity<Administration>(admin, HttpStatus.OK);
 	}
 
+	// Find Administration by AdminId
+	// localhost:8086/weather/getAdmin/101
 	@GetMapping("/getAdmin/{adminId}")
 	public ResponseEntity<Administration> getAdminById(@PathVariable long adminId) throws AdminNotFoundException {
 		Logger.info("getAdminById");
@@ -49,38 +53,48 @@ public class AdminController {
 		return new ResponseEntity<Administration>(admin, HttpStatus.OK);
 	}
 
+	// Get details of all the administration
+	// localhost:8086/weather/getAllAdmin
 	@GetMapping("/getAllAdmin")
 	public List<Administration> getAllAdministration() {
 		Logger.info("getAllAdministration");
 		return adminService.getAllAdmin();
 	}
 
+	// Deleting administration by Id
+	// localhost:8086/weather/delAdmin/201
 	@DeleteMapping("/delAdmin/{adminId}")
 	public String deleteAdminById(@PathVariable long adminId) throws AdminNotFoundException {
 		Logger.info("deleteAdminById");
 		return adminService.deleteAdminById(adminId);
 	}
 
+	// get User details from the administration using UserId
+	// localhost:8086/weather/getUserByIdFromAdmin/101
 	@PatchMapping(value = "/getUserByIdFromAdmin/{rid},")
 	public ResponseEntity<Registration> getUserById(@PathVariable("rid") long rid, @RequestBody Administration admin)
 			throws NoSuchRegistrationException {
-		boolean resultLogin = adminService.loginAdmin(admin.getAdminId(), admin.getAdminPassword(), admin.getAdminName());
-		
-		if(resultLogin) {
-		Registration result = registrationService.getUser(rid);
-		ResponseEntity<Registration> response = new ResponseEntity<>(result, HttpStatus.OK);
-		return response;
+		boolean resultLogin = adminService.loginAdmin(admin.getAdminId(), admin.getAdminPassword(),
+				admin.getAdminName());
+
+		if (resultLogin) {
+			Registration result = registrationService.getUser(rid);
+			ResponseEntity<Registration> response = new ResponseEntity<>(result, HttpStatus.OK);
+			return response;
 		}
 		throw new NoSuchRegistrationException("Incorrect Login Credentials");
 	}
 
+	// Get All User details from Administration
+	// localhost:8086/weather/getAllUsers
 	@PatchMapping(value = "/getAllUsers")
-	public List<Registration> getAllUsers(@RequestBody Administration admin) throws NoSuchRegistrationException{
-		boolean resultLogin = adminService.loginAdmin(admin.getAdminId(), admin.getAdminPassword(), admin.getAdminName());
-		
-		if(resultLogin) {
-		Logger.info("getAllUsers");
-		return adminService.getAllUsers();
+	public List<Registration> getAllUsers(@RequestBody Administration admin) throws NoSuchRegistrationException {
+		boolean resultLogin = adminService.loginAdmin(admin.getAdminId(), admin.getAdminPassword(),
+				admin.getAdminName());
+
+		if (resultLogin) {
+			Logger.info("getAllUsers");
+			return adminService.getAllUsers();
 		}
 		throw new NoSuchRegistrationException("Incorrect Login Credentials");
 	}

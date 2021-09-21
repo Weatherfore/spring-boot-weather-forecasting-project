@@ -23,15 +23,14 @@ import spring.boot.weather.forecasting.service.RegistrationService;
 
 
 @RestController
-//@CrossOrigin
 @RequestMapping(path = "/weather")
 public class RegistrationController {
 		
 	@Autowired
-	
 	private RegistrationService registrationService;
 	
 
+	//Registration of User
 	// localhost:8086/weather/registration/addUser
 	@PostMapping(value = "/registration/addUser")
 	public ResponseEntity<String> saveUser(@RequestBody Registration newUser) throws InvalidFieldException {
@@ -44,6 +43,7 @@ public class RegistrationController {
 	}
 
 
+	//Find User using UserId
 	//localhost:8086/weather/getUserById/27
 	@GetMapping(value = "/getUserById/{rid}")
 	public ResponseEntity<Registration> getUserById(@PathVariable("rid") long rid) throws NoSuchRegistrationException {
@@ -52,6 +52,7 @@ public class RegistrationController {
 		return response;
 	}
 
+	//Deleting user using userId
 	//localhost:8086/weather/deleteUserById/26
 	@DeleteMapping(value = "/deleteUserById/{rid}")
 	public ResponseEntity<String> deleteUserById(@PathVariable("rid") long rid) throws NoSuchRegistrationException {
@@ -60,6 +61,7 @@ public class RegistrationController {
 		return response;
 	}
 
+	//Updating user details using userId
 	//localhost:8086/weather/updateUser
 	@PutMapping(value = "/updateUser")
 	public ResponseEntity<Registration> updateUser(@RequestBody Registration user) throws NoSuchRegistrationException{

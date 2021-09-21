@@ -26,8 +26,7 @@ public class AdminService {
 	@Autowired
 	RegistrationRepository registrationRepository;
 
-	// Add admin
-
+	// Administration registration
 	public Administration addAdmin(Administration admin) {
 		Logger.info("addAdmin");
 		try {
@@ -38,7 +37,8 @@ public class AdminService {
 		}
 	}
 
-	public Administration getAdminById(long adminId) throws AdminNotFoundException { // manually exception handling
+	// get Administration details by adminId
+	public Administration getAdminById(long adminId) throws AdminNotFoundException {
 		Logger.info("getAdminById " + adminId);
 		Optional<Administration> optAdmin = adminRepository.findById(adminId);
 		if (optAdmin.isEmpty())
@@ -47,11 +47,13 @@ public class AdminService {
 			return optAdmin.get();
 	}
 
+	// Get All the Administration
 	public List<Administration> getAllAdmin() {
 		Logger.info("getAllAdmin");
 		return adminRepository.findAll();
 	}
 
+	// Delete administration using adminId
 	public String deleteAdminById(long adminId) throws AdminNotFoundException {
 		if (adminRepository.existsById(adminId)) {
 			adminRepository.deleteById(adminId);
@@ -61,6 +63,7 @@ public class AdminService {
 		throw new AdminNotFoundException("No Such admin Id is present");
 	}
 
+	// Get User details from Administration
 	public Registration getUser(long rid) throws NoSuchRegistrationException {
 		Registration user = null;
 		if (registrationRepository.existsById(rid)) {
@@ -71,11 +74,13 @@ public class AdminService {
 		throw new NoSuchRegistrationException("No Such User Id is present");
 	}
 
+	// Get All the user details from Administration
 	public List<Registration> getAllUsers() {
 		Logger.info("getAllUsers");
 		return registrationRepository.findAll();
 	}
 
+	// Administration Login
 	public boolean loginAdmin(long adminId, String adminPassword, String adminName)
 			throws IncorrectLoginCredentialsException {
 		boolean result = false;
@@ -88,7 +93,7 @@ public class AdminService {
 			return result;
 		}
 		Logger.error("details are incorrect");
-		throw new IncorrectLoginCredentialsException("Invalid Credentials");	
+		throw new IncorrectLoginCredentialsException("Invalid Credentials");
 	}
-	
+
 }

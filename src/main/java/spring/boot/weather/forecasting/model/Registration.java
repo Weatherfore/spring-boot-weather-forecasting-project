@@ -10,7 +10,7 @@ public class Registration {
 	private long rid;
 
 	@Column(name = "user_name", nullable = false, length = 20)
-	private String name;// user_name
+	private String userName;
 
 	@Column(nullable = false, length = 64)
 	private String password;
@@ -18,16 +18,15 @@ public class Registration {
 	@Column(name = "re_enter_password", nullable = false, length = 64)
 	private String reEnterPassword;
 	
-	//role - admin and user - create separate enum 
 
 	public Registration() {
 		super();
 	}
 
-	public Registration(long rid, String name, String password, String reEnterPassword) {
+	public Registration(long rid, String userName, String password, String reEnterPassword) {
 		super();
 		this.rid = rid;
-		this.name = name;
+		this.userName = userName;
 		this.password = password;
 		this.reEnterPassword = reEnterPassword;
 	}
@@ -40,12 +39,12 @@ public class Registration {
 		this.rid = rid;
 	}
 
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -66,7 +65,7 @@ public class Registration {
 
 	@Override
 	public String toString() {
-		return "Registration [rid=" + rid + ", name=" + name + ", password=" + password + ", reEnterPassword="
+		return "Registration [rid=" + rid + ", userName=" + userName + ", password=" + password + ", reEnterPassword="
 				+ reEnterPassword + "]";
 	}
 

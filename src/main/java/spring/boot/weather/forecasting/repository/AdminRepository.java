@@ -8,6 +8,5 @@ import spring.boot.weather.forecasting.model.Administration;
 @Repository
 public interface AdminRepository extends JpaRepository<Administration, Long>{
 
-	
-	
+		
 }

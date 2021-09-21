@@ -22,27 +22,50 @@ public class RegistrationServiceTest {
 	public void testAddUserSuccess() throws Exception {
 		Logger.info("testAddUserSuccess");
 		boolean expected = true;
-		Registration newUser = new Registration(101, "Shalini", "root", "root");
+		Registration newUser = new Registration(103, "Monu", "ruvy", "ruvy");
 		boolean actual = registrationService.addUser(newUser);
 		assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testGetUserByIdSuccess() throws Exception {
-		Logger.info("testGetUserByIdSuccess");
-		Registration expected = new Registration(37, "Bakki", "root", "root");
-		Registration actual = registrationService.getUser(37);
-		assertEquals(expected.getRid(), actual.getRid());
-		assertEquals(expected.getName(), expected.getName());
-		assertEquals(expected.getPassword(), expected.getPassword());
-		assertEquals(expected.getReEnterPassword(), expected.getReEnterPassword());
+	public void testAddUserSuccessForGet() throws Exception {
+		Logger.info("testAddUserSuccessForGet");
+		boolean expected = true;
+		Registration newUser = new Registration(104, "Sonu", "ruvy", "ruvy");
+		boolean actual = registrationService.addUser(newUser);
+		assertEquals(expected, actual);
 	}
 
+	
+	@Test
+	public void testGetUserByIdSuccess() throws Exception {
+		Logger.info("testGetUserByIdSuccess");
+		Registration expected = new Registration(104, "Sonu", "ruvy", "ruvy");
+		Registration actual = registrationService.getUser(104);
+		assertEquals(expected.getRid(), actual.getRid());
+	}
+	
+	@Test
+	public void testGetUserByIdCheckingName() throws Exception {
+		Logger.info("testGetUserByIdCheckingName");
+		Registration expected = new Registration(104, "Sonu", "ruvy", "ruvy");
+		Registration actual = registrationService.getUser(104);
+		assertEquals(expected.getUserName(), actual.getUserName());
+	}
+
+	@Test
+	public void testGetUserByIdCheckingPassword() throws Exception {
+		Logger.info("testGetUserByIdCheckingPassword");
+		Registration expected = new Registration(104, "Sonu", "ruvy", "ruvy");
+		Registration actual = registrationService.getUser(104);
+		assertEquals(expected.getPassword(), actual.getPassword());
+	}
+	
 	@Test
 	public void testDeleteUserByIdSuccess() throws Exception {
 		Logger.info("testDeleteUserByIdSuccess");
 		String expected = "Registration successfully deleted";
-		String actual = registrationService.deleteUser(101);
+		String actual = registrationService.deleteUser(103);
 		assertEquals(expected, actual);
 	}
 
