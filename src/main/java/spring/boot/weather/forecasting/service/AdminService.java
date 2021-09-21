@@ -57,7 +57,7 @@ public class AdminService {
 	public String deleteAdminById(long adminId) throws AdminNotFoundException {
 		if (adminRepository.existsById(adminId)) {
 			adminRepository.deleteById(adminId);
-			return "Admin successfully deleted";
+			return "The Admin was successfully deleted";
 		}
 		Logger.error("The entered id is not exist");
 		throw new AdminNotFoundException("No Such admin Id is present");

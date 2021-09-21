@@ -63,6 +63,9 @@ public class RegistrationService {
 		throw new NoSuchRegistrationException("No Such User Id is present");
 	}
 
+	
+	
+	
 	// DeleteUserById
 	public String deleteUser(long rid) throws NoSuchRegistrationException {
 		if (registrationRepository.existsById(rid)) {
