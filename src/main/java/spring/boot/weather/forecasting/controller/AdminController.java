@@ -116,10 +116,10 @@ public class AdminController {
 
 	// Get All User details from Administration
 	// localhost:8086/weather/admin/getAllUsers
-	@PatchMapping(value = "/getAllUsers")
-	public ResponseEntity<List<Registration>> getAllUsers(@RequestBody Administration admin) {
+	@GetMapping(value = "/getAllUsers")
+	public ResponseEntity<List<Registration>> getAllUsersFromAdmin() {
 
-		Logger.info("getAllUsers");
+		Logger.info("getAllUsersFromAdmin");
 		List<Registration> result = adminService.getAllUsers();
 		ResponseEntity<List<Registration>> response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;

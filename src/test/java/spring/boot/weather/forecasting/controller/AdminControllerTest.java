@@ -90,8 +90,8 @@ public class AdminControllerTest {
 		public void testGetAllUserFromAdmin() throws Exception{
 			Logger.info("testGetAllUserFromAdmin");
 			HttpStatus expected = HttpStatus.OK;
-			Administration newAdmin = new Administration(501, "Leader", "admin10");
-			ResponseEntity<List<Registration>> actual = adminController.getAllUsers(newAdmin);
+			//Administration newAdmin = new Administration(501, "Leader", "admin10");
+			ResponseEntity<List<Registration>> actual = adminController.getAllUsersFromAdmin();
 			assertEquals(expected,  actual.getStatusCode());	
 		}
 		
@@ -99,8 +99,8 @@ public class AdminControllerTest {
 		public void testGetAllUserFromAdminCode() throws Exception{
 			Logger.info("testGetAllUserFromAdminCode");
 			int expected = 200;
-			Administration newAdmin = new Administration(501, "Leader", "admin10");
-			ResponseEntity<List<Registration>> actual = adminController.getAllUsers(newAdmin);
+			//Administration newAdmin = new Administration(501, "Leader", "admin10");
+			ResponseEntity<List<Registration>> actual = adminController.getAllUsersFromAdmin();
 			assertEquals(expected,  actual.getStatusCodeValue());	
 		}
 		
