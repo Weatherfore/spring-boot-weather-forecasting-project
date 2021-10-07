@@ -39,7 +39,7 @@ public class AdminController {
 	private RegistrationService registrationService;
 
 	// Admin registration
-	// localhost:8086/weather/addAdmin
+	// localhost:8086/weather/admin/addAdmin
 
 	@PostMapping(value = "/addAdmin")
 	public ResponseEntity<String> saveAdmin(@RequestBody Administration admin) throws InvalidFieldException {
@@ -51,6 +51,7 @@ public class AdminController {
 		return response;
 	}
 
+	//localhost:8086/weather/admin/-/login
 	@PostMapping(path = "/-/login")
 	public ResponseEntity<Administration> adminLogin(@RequestBody Administration admin)
 			throws IncorrectLoginCredentialsException {
@@ -60,7 +61,7 @@ public class AdminController {
 	}
 
 	// Find Administration by AdminId
-	// localhost:8086/weather/getAdmin/101
+	// localhost:8086/weather/admin/getAdmin/101
 	@GetMapping("/getAdmin/{adminId}")
 	public ResponseEntity<Administration> getAdminById(@PathVariable long adminId) throws AdminNotFoundException {
 		Logger.info("getAdminById");
@@ -69,7 +70,7 @@ public class AdminController {
 	}
 
 	// Get details of all the administration
-	// localhost:8086/weather/getAllAdmin
+	// localhost:8086/weather/admin/getAllAdmin
 	@GetMapping("/getAllAdmin")
 	public ResponseEntity<List<Administration>> getAllAdministration() {
 		Logger.info("getAllAdministration");
@@ -79,7 +80,7 @@ public class AdminController {
 	}
 
 	// Deleting administration by Id
-	// localhost:8086/weather/delAdmin/201
+	// localhost:8086/weather/admin/delAdmin/201
 	@DeleteMapping("/delAdmin/{adminId}")
 	public ResponseEntity<String> deleteAdminById(@PathVariable long adminId) throws AdminNotFoundException {
 		Logger.info("deleteAdminById");
@@ -88,6 +89,7 @@ public class AdminController {
 		return response;
 	}
 
+	// localhost:8086/weather/admin/updateAdmin
 	@PutMapping(value = "/updateAdmin")
 	public ResponseEntity<Administration> updateAdmin(@RequestBody Administration admin) {
 		Administration result = adminService.updatingAdmin(admin);
@@ -96,7 +98,7 @@ public class AdminController {
 	}
 
 	// get User details from the administration using UserId
-	// localhost:8086/weather/getUserByIdFromAdmin/101
+	// localhost:8086/weather/admin/getUserByIdFromAdmin/101
 	@GetMapping(value = "/getUserByIdFromAdmin/{rid}")
 	public ResponseEntity<Registration> getUserById(@PathVariable("rid") long rid) throws NoSuchRegistrationException {
 		Registration result = registrationService.getUser(rid);
@@ -104,6 +106,7 @@ public class AdminController {
 		return response;
 	}
 
+	// localhost:8086/weather/admin/deleteUserByIdFromAdmin/5
 	@DeleteMapping(value = "/deleteUserByIdFromAdmin/{rid}")
 	public ResponseEntity<String> deleteUserById(@PathVariable("rid") long rid) throws NoSuchRegistrationException {
 		String result = adminService.deleteUser(rid);
@@ -112,7 +115,7 @@ public class AdminController {
 	}
 
 	// Get All User details from Administration
-	// localhost:8086/weather/getAllUsers
+	// localhost:8086/weather/admin/getAllUsers
 	@PatchMapping(value = "/getAllUsers")
 	public ResponseEntity<List<Registration>> getAllUsers(@RequestBody Administration admin) {
 
