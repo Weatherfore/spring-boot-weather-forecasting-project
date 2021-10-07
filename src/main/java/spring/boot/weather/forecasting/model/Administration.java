@@ -1,7 +1,5 @@
 package spring.boot.weather.forecasting.model;
 
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

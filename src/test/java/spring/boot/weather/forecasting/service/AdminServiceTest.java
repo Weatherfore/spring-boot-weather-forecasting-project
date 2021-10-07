@@ -9,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import logging.GlobalResources;
 import spring.boot.weather.forecasting.model.Administration;
-import spring.boot.weather.forecasting.model.Registration;
+//import spring.boot.weather.forecasting.model.Registration;
+
 
 @SpringBootTest
 public class AdminServiceTest {
@@ -22,10 +23,12 @@ public class AdminServiceTest {
 	@Test
 	public void testAddAdminSuccess() throws Exception {
 		Logger.info("testAddAdminSuccess");
-		Administration expected = new Administration(504, "Kavi", "kani");
-		Administration actual = adminService.addAdmin(expected);
-		assertEquals(expected.getAdminId(), actual.getAdminId());
+		boolean expected  = true;
+		Administration admin = new Administration(504, "Kavi", "kani");
+		boolean actual = adminService.addAdmin(admin);
+		assertEquals(expected, actual);
 	}
+	
 	
 	@Test
 	public void testGetAdminSuccess() throws Exception{

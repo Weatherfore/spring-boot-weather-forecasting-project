@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import logging.GlobalResources;
+import spring.boot.weather.forecasting.exception.IncorrectLoginCredentialsException;
 import spring.boot.weather.forecasting.exception.InvalidFieldException;
 import spring.boot.weather.forecasting.exception.NoSuchRegistrationException;
+import spring.boot.weather.forecasting.exception.NotAbleToUpdateException;
 import spring.boot.weather.forecasting.model.Registration;
 import spring.boot.weather.forecasting.repository.RegistrationRepository;
 
@@ -13,7 +15,7 @@ import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 
-@Service 
+@Service
 public class RegistrationService {
 
 	private Logger Logger = GlobalResources.getLogger(RegistrationService.class);
@@ -21,8 +23,7 @@ public class RegistrationService {
 	@Autowired
 	RegistrationRepository registrationRepository;
 
-	
-	//User Registration
+	// User Registration
 	@Transactional
 	public boolean addUser(Registration newUser) throws InvalidFieldException {
 		if (newUser.getUserName() != null && newUser.getRid() != 0L && newUser.getPassword() != null
@@ -40,8 +41,8 @@ public class RegistrationService {
 				}
 
 				if (!newUser.getPassword().equals(newUser.getReEnterPassword())) {
-				   throw new InvalidFieldException("Password is not matching");
-                 
+					throw new InvalidFieldException("Password is not matching");
+
 				}
 			}
 			Logger.error("Incorrect details");
@@ -49,9 +50,25 @@ public class RegistrationService {
 
 		}
 		throw new InvalidFieldException("Fields are empty");
+	}
+
+	
+	public Registration loginUser(long rid, String password, String name, String reEnterPassword)
+			throws IncorrectLoginCredentialsException {
+		if (registrationRepository.existsById(rid)
+				&& registrationRepository.findById(rid).get().getPassword().equals(password)
+				&& registrationRepository.findById(rid).get().getUserName().equals(name)
+				&& registrationRepository.findById(rid).get().getReEnterPassword().equals(reEnterPassword)) {
+			Registration user = registrationRepository.findById(rid).get();
+			Logger.info("User login is Successfull");
+			return user;
+		}
+		Logger.error("details are incorrect");
+		throw new IncorrectLoginCredentialsException("Invalid Credentials");
 
 	}
 
+	
 	// GetUserById
 	public Registration getUser(long rid) throws NoSuchRegistrationException {
 		Registration user = null;
@@ -63,9 +80,6 @@ public class RegistrationService {
 		throw new NoSuchRegistrationException("No Such User Id is present");
 	}
 
-	
-	
-	
 	// DeleteUserById
 	public String deleteUser(long rid) throws NoSuchRegistrationException {
 		if (registrationRepository.existsById(rid)) {
@@ -76,15 +90,18 @@ public class RegistrationService {
 		throw new NoSuchRegistrationException("No Such User Id is present");
 	}
 
-	public Registration updatingUser(Registration user) throws NoSuchRegistrationException {
-		if (registrationRepository.existsById(user.getRid()))
-			return registrationRepository.save(user);
-		else {
+	public Registration updatingUser(Registration user) throws NotAbleToUpdateException {
+		if (registrationRepository.existsById(user.getRid())) {
+ 			if (user.getUserName() == "" || user.getPassword() == "" || user.getReEnterPassword() == "") {
+				throw new NotAbleToUpdateException("Invalid fields");
+			} else
+				if (user.getPassword().equals(user.getReEnterPassword())) {
+					return registrationRepository.save(user);
+				} else
+					throw new NotAbleToUpdateException("Invalid fields");
+		} else {
 			Logger.error("The entered id is not exist");
-			throw new NoSuchRegistrationException("No Such User Id is present");
+			throw new NotAbleToUpdateException("No Such User Id is present");
 		}
-
 	}
-
-	
 }

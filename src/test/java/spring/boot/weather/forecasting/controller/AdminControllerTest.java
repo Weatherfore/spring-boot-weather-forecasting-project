@@ -23,12 +23,13 @@ public class AdminControllerTest {
 		@Autowired
 		private AdminController adminController;
 		
+		
 		@Test
 		public void testAddAdminController() throws Exception {
 			Logger.info("testAddAdminController");
 			HttpStatus expected = HttpStatus.OK;
 			Administration newAdmin = new Administration(501, "Leader", "admin10");
-			ResponseEntity<Administration> actual = adminController.addAdministration(newAdmin);
+			ResponseEntity<String> actual = adminController.saveAdmin(newAdmin);
 			assertEquals(expected, actual.getStatusCode());
 		}
 		
@@ -37,7 +38,7 @@ public class AdminControllerTest {
 			Logger.info("testAddAdminControllerCode");
 			int expected = 200;
 			Administration newAdmin = new Administration(502, "Pavan", "admin11");
-			ResponseEntity<Administration> actual = adminController.addAdministration(newAdmin);
+			ResponseEntity<String> actual = adminController.saveAdmin(newAdmin);
 			assertEquals(expected, actual.getStatusCodeValue());
 		}
 		
@@ -70,8 +71,8 @@ public class AdminControllerTest {
 		public void testGetUserFromAdmin() throws Exception{
 			Logger.info("testGetUserFromAdmin");
 			HttpStatus expected = HttpStatus.OK;
-			Administration newAdmin = new Administration(501, "Leader", "admin10");
-			ResponseEntity<Registration> actual = adminController.getUserById(101, newAdmin);
+			//Administration newAdmin = new Administration(501, "Leader", "admin10");
+			ResponseEntity<Registration> actual = adminController.getUserById(101);
 			assertEquals(expected, actual.getStatusCode());	
 		}
 		
@@ -80,8 +81,8 @@ public class AdminControllerTest {
 		public void testGetUserFromAdminCode() throws Exception{
 			Logger.info("testGetUserFromAdminCode");
 			int expected = 200;
-			Administration newAdmin = new Administration(501, "Leader", "admin10");
-			ResponseEntity<Registration> actual = adminController.getUserById(101, newAdmin);
+			//Administration newAdmin = new Administration(501, "Leader", "admin10");
+			ResponseEntity<Registration> actual = adminController.getUserById(101);
 			assertEquals(expected, actual.getStatusCodeValue());	
 		}
 

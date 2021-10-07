@@ -50,10 +50,24 @@ public class CustomExceptionHandler {
 	public ResponseEntity<Object> handleWeatherAppException() {
 		Logger.error("handleWeatherAppException");
 
-		return new ResponseEntity<Object>("Invalid City", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Object>("Invalid City name", HttpStatus.NOT_FOUND);
 
 	}
 
+	@ExceptionHandler(NotAbleToUpdateException.class)
+	public ResponseEntity<Object> handleNotAbleToUpdateException() {
+		Logger.error("handleNotAbleToUpdateException");
+
+		return new ResponseEntity<Object>("Not Able To update, Invalid credentials", HttpStatus.NOT_FOUND);
+
+	}
 	
+	@ExceptionHandler(EmptyRecordException.class)
+	public ResponseEntity<Object> handleEmptyRecordException() {
+		Logger.error("handleEmptyRecordException");
+
+		return new ResponseEntity<Object>("Null Records Found", HttpStatus.NOT_FOUND);
+
+	}
 	
 }

@@ -7,6 +7,8 @@ public class Weather {
 	private float maxTemp;
 	private String message;
 	private String tempDate;
+	
+	
 	public float getTemp() {
 		return temp;
 	}

@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import logging.GlobalResources;
-import spring.boot.weather.forecasting.exception.IncorrectLoginCredentialsException;
+//import spring.boot.weather.forecasting.exception.IncorrectLoginCredentialsException;
+import spring.boot.weather.forecasting.exception.WeatherAppException;
 import spring.boot.weather.forecasting.repository.RegistrationRepository;
 import spring.boot.weather.forecasting.util.HttpRestClient;
 
 @Service
 public class WeatherService {
-
 	private final Logger Logger = GlobalResources.getLogger(this.getClass());
 
 	@Autowired
@@ -20,30 +20,16 @@ public class WeatherService {
 	@Autowired
 	RegistrationRepository registrationRepository;
 
-	public JSONArray getForcast(String cityName) throws IncorrectLoginCredentialsException {
+	public JSONArray getForcast(String cityName) throws WeatherAppException {
 
 		this.Logger.info("Service:getForcast called with cityName:  " + cityName);
-		JSONArray response = this.restClient.getAPIData(cityName);
-		this.Logger.info("Service:getForcast successfully return data with cityName:  " + cityName);
-		return response;
-
-	}
-
-	public boolean loginUser(long rid, String password, String name, String reEnterPassword)
-			throws IncorrectLoginCredentialsException {
-		boolean result = false;
-		if (registrationRepository.existsById(rid)
-				&& registrationRepository.findById(rid).get().getPassword().equals(password)
-				&& registrationRepository.findById(rid).get().getUserName().equals(name)
-				&& registrationRepository.findById(rid).get().getReEnterPassword().equals(reEnterPassword)) {
-
-			Logger.info("User login is Successfull");
-			result = true;
-			return result;
+		String regex = "^[A-Za-z ]+";
+		if (cityName.matches(regex)) {
+			JSONArray response = this.restClient.getAPIData(cityName);
+			this.Logger.info("Service:getForcast successfully return data with cityName:  " + cityName);
+			return response;
 		}
-		Logger.error("details are incorrect");
-		throw new IncorrectLoginCredentialsException("Invalid Credentials");
-
+		throw new WeatherAppException("city name is invalid");
 	}
 
 }

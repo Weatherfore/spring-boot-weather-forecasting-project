@@ -1,7 +1,5 @@
 package spring.boot.weather.forecasting.model;
 
-
-
 public class City {
 
 	String city;
@@ -9,6 +7,7 @@ public class City {
 	float maxTemp;
 	String message;
 	String date;
+	
 	public String getCity() {
 		return city;
 	}

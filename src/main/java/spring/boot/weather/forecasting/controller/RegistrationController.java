@@ -42,7 +42,6 @@ public class RegistrationController {
 		return response;
 	}
 
-
 	//Find User using UserId
 	//localhost:8086/weather/getUserById/27
 	@GetMapping(value = "/getUserById/{rid}")
@@ -64,7 +63,7 @@ public class RegistrationController {
 	//Updating user details using userId
 	//localhost:8086/weather/updateUser
 	@PutMapping(value = "/updateUser")
-	public ResponseEntity<Registration> updateUser(@RequestBody Registration user) throws NoSuchRegistrationException{
+	public ResponseEntity<Registration> updateUser(@RequestBody Registration user){
 		Registration result = registrationService.updatingUser(user);
 		ResponseEntity<Registration> response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
