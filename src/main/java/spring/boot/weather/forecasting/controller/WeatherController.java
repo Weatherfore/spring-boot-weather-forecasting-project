@@ -27,8 +27,8 @@ public class WeatherController {
 
 	// http://localhost:8086/weather/getForcast?cityName=Delhi
 	@GetMapping(value = "/getForcast", produces = "application/json")
-	public ResponseEntity<String> getForcast(@RequestBody Registration user,
-			@RequestParam(value = "cityName") String cityName) throws WeatherAppException {
+	public ResponseEntity<String> getForcast(@RequestParam(value = "cityName") String cityName)
+			throws WeatherAppException {
 
 		this.Logger.info("getForcast called with cityName: " + cityName);
 		JSONArray result = null;
