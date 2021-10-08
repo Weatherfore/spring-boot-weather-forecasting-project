@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import spring.boot.weather.forecasting.exception.IncorrectLoginCredentialsException;
 import spring.boot.weather.forecasting.exception.InvalidFieldException;
 import spring.boot.weather.forecasting.exception.NoSuchRegistrationException;
-
+import spring.boot.weather.forecasting.model.Administration;
 import spring.boot.weather.forecasting.model.Registration;
 import spring.boot.weather.forecasting.service.RegistrationService;
 
@@ -41,9 +40,20 @@ public class RegistrationController {
 
 		return response;
 	}
-
+	
+	//user login
+	//localhost:8086/weather/user/-/login
+		@PostMapping(path = "/user/-/login")
+		public ResponseEntity<Registration> userLogin(@RequestBody Registration user)
+				throws IncorrectLoginCredentialsException {
+			Registration result = registrationService.loginUser(user.getRid(), user.getUserName(), user.getPassword(), user.getReEnterPassword());
+			ResponseEntity<Registration> response = new ResponseEntity<>(result, HttpStatus.OK);
+			return response;
+		}
+		
 	//Find User using UserId
 	//localhost:8086/weather/getUserById/27
+		
 	@GetMapping(value = "/getUserById/{rid}")
 	public ResponseEntity<Registration> getUserById(@PathVariable("rid") long rid) throws NoSuchRegistrationException {
 		Registration result = registrationService.getUser(rid);

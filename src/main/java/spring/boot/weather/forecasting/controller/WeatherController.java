@@ -38,7 +38,6 @@ public class WeatherController {
 			System.out.println(result.toString());
 			this.Logger.info("getForcast successfully got result for city: " + cityName + " and result is : "
 					+ result.toString());
-
 		} catch (WeatherAppException e) {
 			this.Logger.error("getForcast Error getting data :  " + e.getMessage());
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

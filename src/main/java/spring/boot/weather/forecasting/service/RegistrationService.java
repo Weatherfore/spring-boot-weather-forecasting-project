@@ -53,7 +53,7 @@ public class RegistrationService {
 	}
 
 	
-	public Registration loginUser(long rid, String password, String name, String reEnterPassword)
+	public Registration loginUser(long rid,  String name, String password, String reEnterPassword)
 			throws IncorrectLoginCredentialsException {
 		if (registrationRepository.existsById(rid)
 				&& registrationRepository.findById(rid).get().getPassword().equals(password)
