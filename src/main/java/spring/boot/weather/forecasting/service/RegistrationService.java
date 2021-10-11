@@ -97,11 +97,13 @@ public class RegistrationService {
 		if (registrationRepository.existsById(user.getRid())) {
  			if (user.getUserName() == "" || user.getPassword() == "" || user.getReEnterPassword() == "") {
 				throw new NotAbleToUpdateException("Invalid fields");
-			} else
-				if (user.getPassword().equals(user.getReEnterPassword())) {
+			} else {
+				String regex = "^[A-Za-z ]+";
+				if (user.getPassword().equals(user.getReEnterPassword()) && user.getUserName().matches(regex)) {
 					return registrationRepository.save(user);
 				} else
 					throw new NotAbleToUpdateException("Invalid fields");
+			}
 		} else {
 			Logger.error("The entered id is not exist");
 			throw new NotAbleToUpdateException("No Such User Id is present");

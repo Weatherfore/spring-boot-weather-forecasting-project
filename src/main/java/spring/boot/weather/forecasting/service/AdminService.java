@@ -34,24 +34,24 @@ public class AdminService {
 	// Administration registration
 	@Transactional
 	public boolean addAdmin(Administration admin) throws InvalidFieldException {
-		if(!adminRepository.existsById(admin.getAdminId())) {
-		if (admin.getAdminName() != null && admin.getAdminId() != 0L && admin.getAdminPassword() != null) {
-			boolean result = false;
-			String name = admin.getAdminName();
+		if (!adminRepository.existsById(admin.getAdminId())) {
+			if (admin.getAdminName() != null && admin.getAdminId() != 0L && admin.getAdminPassword() != null) {
+				boolean result = false;
+				String name = admin.getAdminName();
 
-			String regex = "^[A-Za-z ]+";
-			if (name.matches(regex)) {
-				admin = adminRepository.save(admin);
-				result = true;
-				Logger.info("Admin is added successfully");
-				return result;
+				String regex = "^[A-Za-z ]+";
+				if (name.matches(regex)) {
+					admin = adminRepository.save(admin);
+					result = true;
+					Logger.info("Admin is added successfully");
+					return result;
+				}
+				Logger.error("Incorrect details");
+				throw new InvalidFieldException("Not able to add user");
+
 			}
-			Logger.error("Incorrect details");
-			throw new InvalidFieldException("Not able to add user");
-
+			throw new InvalidFieldException("Fields are empty");
 		}
-		throw new InvalidFieldException("Fields are empty");
-	}
 		throw new InvalidFieldException("Id Already Exists");
 	}
 
@@ -106,21 +106,21 @@ public class AdminService {
 	}
 
 	// Get All the user details from Administration
-	public List<Registration> getAllUsers() throws EmptyRecordException{
-		if(registrationRepository.count()!=0L) {
-		Logger.info("getAllUsers");
-		return registrationRepository.findAll();
-	}
+	public List<Registration> getAllUsers() throws EmptyRecordException {
+		if (registrationRepository.count() != 0L) {
+			Logger.info("getAllUsers");
+			return registrationRepository.findAll();
+		}
 		Logger.error("Empty record found");
 		throw new EmptyRecordException("Empty record found");
-  }
+	}
 
 	// Administration Login
 	public Administration loginAdmin(long adminId, String adminPassword, String adminName)
 			throws IncorrectLoginCredentialsException {
 		if (adminRepository.existsById(adminId)
 				&& adminRepository.findById(adminId).get().getAdminPassword().equals(adminPassword)
-				&& adminRepository.findById(adminId).get().getAdminName().equals(adminName)){
+				&& adminRepository.findById(adminId).get().getAdminName().equals(adminName)) {
 			Logger.info("Admin login is Successfull");
 			Administration admin = adminRepository.findById(adminId).get();
 			return admin;
@@ -133,8 +133,16 @@ public class AdminService {
 		if (adminRepository.existsById(admin.getAdminId())) {
 			if (admin.getAdminId() == 0L || admin.getAdminPassword() == "" || admin.getAdminName() == "") {
 				throw new NotAbleToUpdateException("Invalid fields");
-			} else
-				return adminRepository.save(admin);
+			} else {
+
+				String regex = "^[A-Za-z ]+";
+				if (admin.getAdminName().matches(regex)) {
+					return adminRepository.save(admin);
+				} else {
+					Logger.error("Name is not valid");
+					throw new NotAbleToUpdateException("Name is not valid");
+				}
+			}
 		} else {
 			Logger.error("The entered id is not exist");
 			throw new NotAbleToUpdateException("No Such admin Id is present");
