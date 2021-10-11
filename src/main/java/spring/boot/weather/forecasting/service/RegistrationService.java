@@ -26,6 +26,8 @@ public class RegistrationService {
 	// User Registration
 	@Transactional
 	public boolean addUser(Registration newUser) throws InvalidFieldException {
+		Logger.info(newUser.toString());
+		if(!registrationRepository.existsById(newUser.getRid())) {
 		if (newUser.getUserName() != null && newUser.getRid() != 0L && newUser.getPassword() != null
 				&& newUser.getReEnterPassword() != null) {
 			boolean result = false;
@@ -51,13 +53,14 @@ public class RegistrationService {
 		}
 		throw new InvalidFieldException("Fields are empty");
 	}
+		throw new InvalidFieldException("Id already exists");
 
-	
-	public Registration loginUser(long rid,  String name, String password, String reEnterPassword)
+	}
+	public Registration loginUser(long rid, String password, String userName, String reEnterPassword)
 			throws IncorrectLoginCredentialsException {
 		if (registrationRepository.existsById(rid)
 				&& registrationRepository.findById(rid).get().getPassword().equals(password)
-				&& registrationRepository.findById(rid).get().getUserName().equals(name)
+				&& registrationRepository.findById(rid).get().getUserName().equals(userName)
 				&& registrationRepository.findById(rid).get().getReEnterPassword().equals(reEnterPassword)) {
 			Registration user = registrationRepository.findById(rid).get();
 			Logger.info("User login is Successfull");

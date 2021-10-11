@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,6 +28,7 @@ import spring.boot.weather.forecasting.service.AdminService;
 import spring.boot.weather.forecasting.service.RegistrationService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/weather/admin")
 public class AdminController {
 
@@ -45,7 +47,7 @@ public class AdminController {
 	public ResponseEntity<String> saveAdmin(@RequestBody Administration admin) throws InvalidFieldException {
 		ResponseEntity<String> response = null;
 		if (adminService.addAdmin(admin)) {
-			response = new ResponseEntity<String>(admin.toString(), HttpStatus.CREATED);
+			response = new ResponseEntity<String>(admin.toString(), HttpStatus.OK);
 		}
 
 		return response;

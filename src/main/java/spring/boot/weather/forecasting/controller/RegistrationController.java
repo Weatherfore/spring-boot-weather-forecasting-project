@@ -4,6 +4,7 @@ package spring.boot.weather.forecasting.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import spring.boot.weather.forecasting.service.RegistrationService;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/weather")
 public class RegistrationController {
 		
@@ -46,7 +48,7 @@ public class RegistrationController {
 		@PostMapping(path = "/user/-/login")
 		public ResponseEntity<Registration> userLogin(@RequestBody Registration user)
 				throws IncorrectLoginCredentialsException {
-			Registration result = registrationService.loginUser(user.getRid(), user.getUserName(), user.getPassword(), user.getReEnterPassword());
+			Registration result = registrationService.loginUser(user.getRid(), user.getPassword(), user.getUserName(), user.getReEnterPassword());
 			ResponseEntity<Registration> response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}

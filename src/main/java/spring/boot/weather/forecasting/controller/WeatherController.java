@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import spring.boot.weather.forecasting.model.Registration;
 import spring.boot.weather.forecasting.service.WeatherService;
 
 @RestController
-
+@CrossOrigin
 @RequestMapping(path = "/weather")
 public class WeatherController {
 	private Logger Logger = GlobalResources.getLogger(RegistrationController.class);

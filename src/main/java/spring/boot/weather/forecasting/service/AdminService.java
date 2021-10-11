@@ -34,6 +34,7 @@ public class AdminService {
 	// Administration registration
 	@Transactional
 	public boolean addAdmin(Administration admin) throws InvalidFieldException {
+		if(!adminRepository.existsById(admin.getAdminId())) {
 		if (admin.getAdminName() != null && admin.getAdminId() != 0L && admin.getAdminPassword() != null) {
 			boolean result = false;
 			String name = admin.getAdminName();
@@ -50,6 +51,8 @@ public class AdminService {
 
 		}
 		throw new InvalidFieldException("Fields are empty");
+	}
+		throw new InvalidFieldException("Id Already Exists");
 	}
 
 	// get Administration details by adminId
@@ -117,8 +120,7 @@ public class AdminService {
 			throws IncorrectLoginCredentialsException {
 		if (adminRepository.existsById(adminId)
 				&& adminRepository.findById(adminId).get().getAdminPassword().equals(adminPassword)
-				&& adminRepository.findById(adminId).get().getAdminName().equals(adminName)) {
-
+				&& adminRepository.findById(adminId).get().getAdminName().equals(adminName)){
 			Logger.info("Admin login is Successfull");
 			Administration admin = adminRepository.findById(adminId).get();
 			return admin;
